@@ -1,0 +1,22 @@
+{
+  "publishes": {
+    "astral-quartz-wx3r": {
+      "siteUrl": "https://astral-quartz-wx3r.here.now/",
+      "claimToken": "d0d0e86f63bc4fdbf86d432aebadd93a16b50f658e860bcfa7ac7569c71e5268",
+      "claimUrl": "https://here.now/claim?slug=astral-quartz-wx3r&token=d0d0e86f63bc4fdbf86d432aebadd93a16b50f658e860bcfa7ac7569c71e5268",
+      "expiresAt": "2026-06-11T18:59:38.405Z"
+    },
+    "onyx-acorn-8w5s": {
+      "siteUrl": "https://onyx-acorn-8w5s.here.now/",
+      "claimToken": "bdf1233670706c5580774519f1d1b895ecbcb04cc18cd70fe2e7216361c2c328",
+      "claimUrl": "https://here.now/claim?slug=onyx-acorn-8w5s&token=bdf1233670706c5580774519f1d1b895ecbcb04cc18cd70fe2e7216361c2c328",
+      "expiresAt": "2026-06-11T19:06:10.712Z"
+    },
+    "rustic-silence-yqf4": {
+      "siteUrl": "https://rustic-silence-yqf4.here.now/",
+      "claimToken": "4057cc313e17e68a2660f52ac1024e14abdd79f2ab2339319bd53328d7a27f8a",
+      "claimUrl": "https://here.now/claim?slug=rustic-silence-yqf4&token=4057cc313e17e68a2660f52ac1024e14abdd79f2ab2339319bd53328d7a27f8a",
+      "expiresAt": "2026-06-11T19:15:22.939Z"
+    }
+  }
+}

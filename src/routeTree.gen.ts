@@ -9,38 +9,159 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TheSalonRouteImport } from './routes/the-salon'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesSkinCareRouteImport } from './routes/services.skin-care'
+import { Route as ServicesNailArchitectureRouteImport } from './routes/services.nail-architecture'
+import { Route as ServicesHairArtistryRouteImport } from './routes/services.hair-artistry'
 
+const TheSalonRoute = TheSalonRouteImport.update({
+  id: '/the-salon',
+  path: '/the-salon',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesSkinCareRoute = ServicesSkinCareRouteImport.update({
+  id: '/skin-care',
+  path: '/skin-care',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesNailArchitectureRoute =
+  ServicesNailArchitectureRouteImport.update({
+    id: '/nail-architecture',
+    path: '/nail-architecture',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesHairArtistryRoute = ServicesHairArtistryRouteImport.update({
+  id: '/hair-artistry',
+  path: '/hair-artistry',
+  getParentRoute: () => ServicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/the-salon': typeof TheSalonRoute
+  '/services/hair-artistry': typeof ServicesHairArtistryRoute
+  '/services/nail-architecture': typeof ServicesNailArchitectureRoute
+  '/services/skin-care': typeof ServicesSkinCareRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/the-salon': typeof TheSalonRoute
+  '/services/hair-artistry': typeof ServicesHairArtistryRoute
+  '/services/nail-architecture': typeof ServicesNailArchitectureRoute
+  '/services/skin-care': typeof ServicesSkinCareRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/the-salon': typeof TheSalonRoute
+  '/services/hair-artistry': typeof ServicesHairArtistryRoute
+  '/services/nail-architecture': typeof ServicesNailArchitectureRoute
+  '/services/skin-care': typeof ServicesSkinCareRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/gallery'
+    | '/services'
+    | '/the-salon'
+    | '/services/hair-artistry'
+    | '/services/nail-architecture'
+    | '/services/skin-care'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/gallery'
+    | '/services'
+    | '/the-salon'
+    | '/services/hair-artistry'
+    | '/services/nail-architecture'
+    | '/services/skin-care'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/gallery'
+    | '/services'
+    | '/the-salon'
+    | '/services/hair-artistry'
+    | '/services/nail-architecture'
+    | '/services/skin-care'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  GalleryRoute: typeof GalleryRoute
+  ServicesRoute: typeof ServicesRouteWithChildren
+  TheSalonRoute: typeof TheSalonRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/the-salon': {
+      id: '/the-salon'
+      path: '/the-salon'
+      fullPath: '/the-salon'
+      preLoaderRoute: typeof TheSalonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +169,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/skin-care': {
+      id: '/services/skin-care'
+      path: '/skin-care'
+      fullPath: '/services/skin-care'
+      preLoaderRoute: typeof ServicesSkinCareRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/nail-architecture': {
+      id: '/services/nail-architecture'
+      path: '/nail-architecture'
+      fullPath: '/services/nail-architecture'
+      preLoaderRoute: typeof ServicesNailArchitectureRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/hair-artistry': {
+      id: '/services/hair-artistry'
+      path: '/hair-artistry'
+      fullPath: '/services/hair-artistry'
+      preLoaderRoute: typeof ServicesHairArtistryRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
+interface ServicesRouteChildren {
+  ServicesHairArtistryRoute: typeof ServicesHairArtistryRoute
+  ServicesNailArchitectureRoute: typeof ServicesNailArchitectureRoute
+  ServicesSkinCareRoute: typeof ServicesSkinCareRoute
+}
+
+const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesHairArtistryRoute: ServicesHairArtistryRoute,
+  ServicesNailArchitectureRoute: ServicesNailArchitectureRoute,
+  ServicesSkinCareRoute: ServicesSkinCareRoute,
+}
+
+const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
+  ServicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  GalleryRoute: GalleryRoute,
+  ServicesRoute: ServicesRouteWithChildren,
+  TheSalonRoute: TheSalonRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
