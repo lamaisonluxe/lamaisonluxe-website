@@ -13,10 +13,7 @@
       "expiresAt": "2026-06-11T19:06:10.712Z"
     },
     "rustic-silence-yqf4": {
-      "siteUrl": "https://rustic-silence-yqf4.here.now/",
-      "claimToken": "4057cc313e17e68a2660f52ac1024e14abdd79f2ab2339319bd53328d7a27f8a",
-      "claimUrl": "https://here.now/claim?slug=rustic-silence-yqf4&token=4057cc313e17e68a2660f52ac1024e14abdd79f2ab2339319bd53328d7a27f8a",
-      "expiresAt": "2026-06-11T19:15:22.939Z"
+      "siteUrl": "https://rustic-silence-yqf4.here.now/"
     }
   }
 }

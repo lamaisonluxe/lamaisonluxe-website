@@ -5,12 +5,22 @@ import {
   detailPath,
   galleryItems,
   images,
-  quickActions,
   salonSpaces,
   services,
   testimonials,
 } from "../lib/la-maison";
 import { ConversionBand, PageShell, SectionIntro } from "../components/la-maison-layout";
+
+const serviceTickerItems = [
+  "Scalp Treatments",
+  "Body Rituals",
+  "Gel Overlays",
+  "Facials",
+  "Hair Artistry",
+  "Skin Rituals",
+  "Nail Architecture",
+  "Luxury Grooming",
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,10 +44,11 @@ function Index() {
         <div className="lml-hero-shade" />
         <div className="lml-hero-content">
           <span className="lml-kicker">The House of Luxury Grooming in Noida.</span>
-          <h1>
-            Where Beauty
-            <br />
-            Meets <em>Artistry</em>
+          <h1 className="lml-hero-title">
+            <span>Where Beauty</span>
+            <span>
+              Meets <em>Artistry</em>
+            </span>
           </h1>
           <p>Designed for comfort. Crafted for elegance. Built for exceptional care.</p>
           <div className="lml-hero-actions">
@@ -53,8 +64,29 @@ function Index() {
         </div>
       </section>
 
-      <section className="lml-experience">
-        <div className="lml-experience-copy">
+      <section className="lml-service-marquee" aria-label="Featured La Maison Luxe services">
+        <div className="lml-marquee-track">
+          <div className="lml-marquee-set">
+            {serviceTickerItems.map((item) => (
+              <span key={item}>
+                {item}
+                <b aria-hidden="true">✦</b>
+              </span>
+            ))}
+          </div>
+          <div className="lml-marquee-set" aria-hidden="true">
+            {serviceTickerItems.map((item) => (
+              <span key={item}>
+                {item}
+                <b>✦</b>
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="lml-experience lml-reveal">
+        <div className="lml-experience-copy lml-reveal">
           <span>Experience The Space</span>
           <h2>A salon environment designed to be felt before the service begins.</h2>
           <p>
@@ -62,8 +94,8 @@ function Index() {
             turn the physical space into part of the La Maison Luxe experience.
           </p>
         </div>
-        <div className="lml-space-editorial">
-          <figure className="lml-space-main">
+        <div className="lml-space-editorial lml-stagger">
+          <figure className="lml-space-main lml-image-reveal">
             <img src={images.hero} alt="La Maison Luxe main salon floor" />
             <figcaption>
               Designed for comfort. Crafted for elegance. Built for exceptional care.
@@ -71,7 +103,7 @@ function Index() {
           </figure>
           <div className="lml-space-stack">
             {salonSpaces.slice(1, 5).map((space) => (
-              <figure key={space.title}>
+              <figure className="lml-image-reveal" key={space.title}>
                 <img src={space.image} alt={space.title} />
                 <figcaption>{space.title}</figcaption>
               </figure>
@@ -80,13 +112,13 @@ function Index() {
         </div>
       </section>
 
-      <section className="lml-about" id="about">
-        <div className="lml-about-collage">
+      <section className="lml-about lml-reveal" id="about">
+        <div className="lml-about-collage lml-stagger">
           <img src={images.stations} alt="Styling stations at La Maison Luxe" />
           <img src={images.treatment} alt="Treatment room at La Maison Luxe" />
           <img src={images.detail} alt="Luxury details at La Maison Luxe" />
         </div>
-        <div className="lml-about-copy">
+        <div className="lml-about-copy lml-reveal">
           <span>Inside La Maison Luxe</span>
           <h2>Personal care in a setting that feels composed, private, and exacting.</h2>
           <p>
@@ -105,12 +137,14 @@ function Index() {
       </section>
 
       <section className="lml-services-preview" id="services">
-        <SectionIntro
-          eyebrow="Services"
-          title="Beauty care shaped around consultation and craft."
-          copy="Explore premium hair, skin, nails, body, and scalp services without pricing tables or sales pressure."
-        />
-        <div className="lml-service-grid">
+        <div className="lml-reveal">
+          <SectionIntro
+            eyebrow="Services"
+            title="Beauty care shaped around consultation and craft."
+            copy="Explore premium hair, skin, nails, body, and scalp services without pricing tables or sales pressure."
+          />
+        </div>
+        <div className="lml-service-grid lml-stagger lml-reveal">
           {services.map((service) => {
             const Icon = service.icon;
             const hasDetail = ["hair-artistry", "skin-care", "nail-architecture"].includes(
@@ -137,8 +171,10 @@ function Index() {
       </section>
 
       <section className="lml-gallery-preview" id="gallery">
-        <SectionIntro eyebrow="Gallery" title="A visual look at the salon atmosphere." />
-        <div className="lml-home-gallery">
+        <div className="lml-reveal">
+          <SectionIntro eyebrow="Gallery" title="A visual look at the salon atmosphere." />
+        </div>
+        <div className="lml-home-gallery lml-stagger lml-reveal">
           {galleryItems.slice(0, 6).map((item, index) => (
             <figure className={index === 0 ? "wide" : ""} key={item.label}>
               <img src={item.image} alt={item.label} />
@@ -151,8 +187,8 @@ function Index() {
         </Link>
       </section>
 
-      <section className="lml-testimonials">
-        <div className="lml-featured-testimonial">
+      <section className="lml-testimonials lml-reveal">
+        <div className="lml-featured-testimonial lml-reveal">
           <span>Client Voices</span>
           <blockquote>{testimonials[0].quote}</blockquote>
           <div>
@@ -164,7 +200,7 @@ function Index() {
             {testimonials[0].initials} - {testimonials[0].location}
           </p>
         </div>
-        <div className="lml-testimonial-rail" aria-label="More testimonials">
+        <div className="lml-testimonial-rail lml-stagger" aria-label="More testimonials">
           {testimonials.slice(1).map((testimonial) => (
             <article key={testimonial.initials}>
               <Diamond size={14} />
