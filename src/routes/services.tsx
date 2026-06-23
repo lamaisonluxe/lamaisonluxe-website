@@ -27,7 +27,7 @@ function ServicesPage() {
           <h1>Premium beauty care without hurry, pressure, or unnecessary noise.</h1>
           <p>
             Each service begins with context: your preferences, routine, comfort, and the result you
-            want to carry out of the salon.
+            want to leave with.
           </p>
         </div>
       </section>
@@ -65,9 +65,9 @@ function ServicesPage() {
                   <div className="lml-service-actions">
                     <a href={contact.whatsapp}>
                       <MessageCircle size={16} />
-                      WhatsApp Inquiry
+                      WhatsApp Enquiry
                     </a>
-                    {hasDetail ? <Link to={detailPath(service.slug)}>Explore Detail</Link> : null}
+                    {hasDetail ? <Link to={detailPath(service.slug)}>Explore Details</Link> : null}
                   </div>
                 </div>
               </article>

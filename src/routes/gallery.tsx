@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { galleryItems, images } from "../lib/la-maison";
+import { LuxuryLightbox } from "../components/luxury-lightbox";
+import type { LightboxImage } from "../components/luxury-lightbox";
 import { PageShell, SectionIntro } from "../components/la-maison-layout";
 
 export const Route = createFileRoute("/gallery")({
@@ -17,10 +19,11 @@ export const Route = createFileRoute("/gallery")({
   component: GalleryPage,
 });
 
-const filters = ["All", "Salon", "Hair", "Skin", "Nails", "Behind The Scenes"];
+const filters = ["All", "Salon", "Hair", "Skin", "Nails", "Behind the Scenes"];
 
 function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [lightboxImage, setLightboxImage] = useState<LightboxImage | null>(null);
   const visibleItems =
     activeFilter === "All"
       ? galleryItems
@@ -38,7 +41,7 @@ function GalleryPage() {
       </section>
 
       <section className="lml-gallery-page">
-        <SectionIntro eyebrow="Photography" title="Interior and service moments." />
+        <SectionIntro eyebrow="Photography" title="Interiors and service moments." />
         <div className="lml-filter-row" aria-label="Gallery filters">
           {filters.map((filter) => (
             <button
@@ -52,21 +55,31 @@ function GalleryPage() {
             </button>
           ))}
         </div>
-        <div className="lml-masonry">
+        <div className="lml-masonry lml-gallery-click-grid">
           {visibleItems.map((item, index) => (
-            <figure
+            <button
+              type="button"
               className={index % 4 === 0 ? "tall" : ""}
               key={`${item.category}-${item.label}`}
+              aria-label={`Open ${item.label}`}
+              onClick={() =>
+                setLightboxImage({
+                  src: item.image,
+                  alt: item.label,
+                  label: `${item.category} - ${item.label}`,
+                })
+              }
             >
               <img src={item.image} alt={item.label} />
-              <figcaption>
+              <span className="lml-masonry-caption">
                 <span>{item.category}</span>
                 {item.label}
-              </figcaption>
-            </figure>
+              </span>
+            </button>
           ))}
         </div>
       </section>
+      <LuxuryLightbox image={lightboxImage} onClose={() => setLightboxImage(null)} />
     </PageShell>
   );
 }

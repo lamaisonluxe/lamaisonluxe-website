@@ -10,7 +10,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Contact La Maison Luxe in Noida. Get directions, call now, or start a WhatsApp consultation.",
+          "Contact La Maison Luxe in Greater Noida. Get directions, call now, or start a WhatsApp consultation.",
       },
     ],
   }),
@@ -27,7 +27,7 @@ function ContactPage() {
           <h1>Plan your visit to La Maison Luxe.</h1>
           <p>
             Use WhatsApp for a consultation, call the salon, or open directions to reach us in
-            Noida.
+            Greater Noida.
           </p>
           <div className="lml-inline-actions">
             <a className="lml-btn lml-btn-gold" href={contact.directions}>

@@ -48,7 +48,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           This page didn't load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Something went wrong on our end. You can try refreshing or go back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -77,16 +77,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Creates an exact replica of an existing website." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Creates an exact replica of an existing website." },
+      { title: "La Maison Luxe - Luxury Salon in Greater Noida" },
+      {
+        name: "description",
+        content:
+          "La Maison Luxe is a luxury salon in Greater Noida offering hair, skin, nail, scalp, and body care.",
+      },
+      { name: "author", content: "La Maison Luxe" },
+      { property: "og:title", content: "La Maison Luxe - Luxury Salon in Greater Noida" },
+      {
+        property: "og:description",
+        content:
+          "La Maison Luxe is a luxury salon in Greater Noida offering hair, skin, nail, scalp, and body care.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Creates an exact replica of an existing website." },
+      { name: "twitter:title", content: "La Maison Luxe - Luxury Salon in Greater Noida" },
+      {
+        name: "twitter:description",
+        content:
+          "La Maison Luxe is a luxury salon in Greater Noida offering hair, skin, nail, scalp, and body care.",
+      },
       {
         property: "og:image",
         content:

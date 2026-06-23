@@ -25,7 +25,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         <div>
           <Icon size={26} />
           <span>Luxury Introduction</span>
-          <h2>A service experience shaped around your comfort and the final finish.</h2>
+          <h2>A service experience shaped around your comfort and desired finish.</h2>
         </div>
         <p>
           At La Maison Luxe, the service begins before the chair or treatment room. The team listens
@@ -37,7 +37,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
       <section className="lml-detail-grid">
         <div>
           <span>Service Offerings</span>
-          <h2>What you can inquire about</h2>
+          <h2>What you can ask about</h2>
           <ul>
             {service.offerings.map((offering) => (
               <li key={offering}>{offering}</li>

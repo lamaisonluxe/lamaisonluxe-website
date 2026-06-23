@@ -1,15 +1,12 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ChevronRight, Diamond, MapPin, MessageCircle, Star } from "lucide-react";
-import {
-  contact,
-  detailPath,
-  galleryItems,
-  images,
-  salonSpaces,
-  services,
-  testimonials,
-} from "../lib/la-maison";
-import { ConversionBand, PageShell, SectionIntro } from "../components/la-maison-layout";
+import { gsap } from "gsap";
+import { useEffect, useRef, useState } from "react";
+import type { TouchEvent, WheelEvent } from "react";
+import { LuxuryLightbox } from "../components/luxury-lightbox";
+import type { LightboxImage } from "../components/luxury-lightbox";
+import { contact, detailPath, images, services, testimonials } from "../lib/la-maison";
+import { ConversionBand, PageShell } from "../components/la-maison-layout";
 
 const serviceTickerItems = [
   "Scalp Treatments",
@@ -22,14 +19,92 @@ const serviceTickerItems = [
   "Luxury Grooming",
 ];
 
+const editorialGalleryItems = [
+  {
+    category: "Salon Interior",
+    title: "Main Salon Floor",
+    image: images.hero,
+    copy: "A composed arrival into warm wood, polished mirrors, and a service rhythm designed to feel unhurried.",
+  },
+  {
+    category: "Styling Suite",
+    title: "Mirror Styling Wall",
+    image: images.stations,
+    copy: "Light, proportion, and station detail come together for precise hair artistry and relaxed consultations.",
+  },
+  {
+    category: "Hair Wash Lounge",
+    title: "Shampoo Lounge",
+    image: images.shampoo,
+    copy: "A quieter pause in the visit, shaped around comfort before the final finish begins.",
+  },
+  {
+    category: "Consultation Area",
+    title: "Private Consultation",
+    image: images.consultation,
+    copy: "A calm space for listening first, understanding preferences, and choosing the right treatment path.",
+  },
+];
+
+const experienceHighlights = [
+  {
+    title: "Main Salon Floor",
+    label: "Comfort",
+    image: images.hero,
+    alt: "La Maison Luxe main salon floor",
+    copy: "A warm, open salon floor with generous mirrors, calm lighting, and an unhurried service rhythm.",
+  },
+  {
+    title: "Skin Care Rooms",
+    label: "Privacy",
+    image: images.treatment,
+    alt: "Private skin care room at La Maison Luxe",
+    copy: "Quiet private rooms for composed skin care.",
+  },
+  {
+    title: "Nail Studio",
+    label: "Detail",
+    image: images.nails,
+    alt: "Nail studio at La Maison Luxe",
+    copy: "Dedicated seating for precise nail and pedicure work.",
+  },
+];
+
+const founders = [
+  {
+    name: "Niharika Birkett",
+    role: "Founder, La Maison Luxe",
+    image: "/founders/niharika-cutout.webp",
+    imageClass: "niharika",
+    intro:
+      "La Maison Luxe was born from a simple vision - to create a space where beauty feels personal, luxury feels effortless, and every guest feels truly cared for.",
+    paragraphs: [
+      "With over 12 years of experience across the corporate world and design, and now as a certified esthetician trained in professional skincare and beauty therapies, I have always believed that exceptional experiences are built through intention, attention to detail, and a deep understanding of people.",
+      "What began as a dream has now become a reality, and I cannot wait to welcome you to La Maison Luxe: a place built with passion, purpose, and the desire to help you look and feel your absolute best.",
+    ],
+  },
+  {
+    name: "Archana Tyagi",
+    role: "Founder, La Maison Luxe",
+    image: "/founders/archana-cutout.webp",
+    imageClass: "archana",
+    intro:
+      "La Maison Luxe is the result of a journey shaped by a passion for beauty and a desire to create experiences that make people feel confident, comfortable, and cared for.",
+    paragraphs: [
+      "With over 8 years of corporate experience and more than 5 years as a nail artist, I have worked closely with clients and built lasting relationships through creativity, consistency, and attention to detail.",
+      "Today, La Maison Luxe brings together everything I have learned and loved throughout my journey. I look forward to welcoming familiar and new faces into a space designed with care, creativity, and a commitment to helping every guest feel their best.",
+    ],
+  },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "La Maison Luxe - Luxury Salon in Noida" },
+      { title: "La Maison Luxe - Luxury Salon in Greater Noida" },
       {
         name: "description",
         content:
-          "La Maison Luxe is the house of luxury grooming in Noida, with premium hair, skin, nail, scalp, and body care in an elegant salon setting.",
+          "La Maison Luxe is the house of luxury grooming in Greater Noida, with premium hair, skin, nail, scalp, and body care in an elegant salon setting.",
       },
     ],
   }),
@@ -37,13 +112,80 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const [lightboxImage, setLightboxImage] = useState<LightboxImage | null>(null);
+  const galleryStageRef = useRef<HTMLDivElement>(null);
+  const galleryCopyRef = useRef<HTMLDivElement>(null);
+  const galleryImageRef = useRef<HTMLImageElement>(null);
+  const galleryWheelLockRef = useRef(0);
+  const galleryTouchStartRef = useRef<number | null>(null);
+  const activeGalleryItem = editorialGalleryItems[activeGalleryIndex];
+
+  useEffect(() => {
+    if (!galleryStageRef.current || !galleryCopyRef.current || !galleryImageRef.current) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+
+    gsap.fromTo(
+      galleryCopyRef.current.children,
+      { autoAlpha: 0, y: 18 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.95,
+        ease: "power3.out",
+        stagger: 0.08,
+      },
+    );
+
+    gsap.fromTo(
+      galleryImageRef.current,
+      { autoAlpha: 0.72, scale: 1.035 },
+      { autoAlpha: 1, scale: 1, duration: 1.25, ease: "power2.out" },
+    );
+  }, [activeGalleryIndex]);
+
+  const showGalleryItem = (index: number) => {
+    setActiveGalleryIndex(
+      ((index % editorialGalleryItems.length) + editorialGalleryItems.length) %
+        editorialGalleryItems.length,
+    );
+  };
+
+  const handleGalleryWheel = (event: WheelEvent<HTMLElement>) => {
+    const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+    if (Math.abs(delta) < 18) return;
+
+    const now = window.performance.now();
+    if (now - galleryWheelLockRef.current < 720) return;
+
+    event.preventDefault();
+    galleryWheelLockRef.current = now;
+    showGalleryItem(activeGalleryIndex + (delta > 0 ? 1 : -1));
+  };
+
+  const handleGalleryTouchStart = (event: TouchEvent<HTMLElement>) => {
+    galleryTouchStartRef.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleGalleryTouchEnd = (event: TouchEvent<HTMLElement>) => {
+    if (galleryTouchStartRef.current === null) return;
+
+    const delta = galleryTouchStartRef.current - (event.changedTouches[0]?.clientX ?? 0);
+    galleryTouchStartRef.current = null;
+    if (Math.abs(delta) < 42) return;
+
+    showGalleryItem(activeGalleryIndex + (delta > 0 ? 1 : -1));
+  };
+
   return (
     <PageShell>
       <section className="lml-hero">
         <img className="lml-hero-img" src={images.hero} alt="La Maison Luxe salon interior" />
         <div className="lml-hero-shade" />
         <div className="lml-hero-content">
-          <span className="lml-kicker">The House of Luxury Grooming in Noida.</span>
+          <span className="lml-kicker">The House of Luxury Grooming in Greater Noida.</span>
           <h1 className="lml-hero-title">
             <span>Where Beauty</span>
             <span>
@@ -54,11 +196,11 @@ function Index() {
           <div className="lml-hero-actions">
             <a className="lml-btn lml-btn-gold" href={contact.whatsapp}>
               <MessageCircle size={17} />
-              WhatsApp Consultation
+              Reserve Your Visit
             </a>
-            <a className="lml-btn lml-btn-ghost" href={contact.directions}>
+            <a className="lml-btn lml-btn-ghost" href="#services">
               <MapPin size={17} />
-              Get Directions
+              Explore Services
             </a>
           </div>
         </div>
@@ -85,68 +227,14 @@ function Index() {
         </div>
       </section>
 
-      <section className="lml-experience lml-reveal">
-        <div className="lml-experience-copy lml-reveal">
-          <span>Experience The Space</span>
-          <h2>A salon environment designed to be felt before the service begins.</h2>
-          <p>
-            Large mirrors, composed treatment rooms, quiet guest areas, and considered detailing
-            turn the physical space into part of the La Maison Luxe experience.
-          </p>
-        </div>
-        <div className="lml-space-editorial lml-stagger">
-          <figure className="lml-space-main lml-image-reveal">
-            <img src={images.hero} alt="La Maison Luxe main salon floor" />
-            <figcaption>
-              Designed for comfort. Crafted for elegance. Built for exceptional care.
-            </figcaption>
-          </figure>
-          <div className="lml-space-stack">
-            {salonSpaces.slice(1, 5).map((space) => (
-              <figure className="lml-image-reveal" key={space.title}>
-                <img src={space.image} alt={space.title} />
-                <figcaption>{space.title}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="lml-about lml-reveal" id="about">
-        <div className="lml-about-collage lml-stagger">
-          <img src={images.stations} alt="Styling stations at La Maison Luxe" />
-          <img src={images.treatment} alt="Treatment room at La Maison Luxe" />
-          <img src={images.detail} alt="Luxury details at La Maison Luxe" />
-        </div>
-        <div className="lml-about-copy lml-reveal">
-          <span>Inside La Maison Luxe</span>
-          <h2>Personal care in a setting that feels composed, private, and exacting.</h2>
-          <p>
-            La Maison Luxe is built around personalised consultations and premium service standards.
-            Every guest is received with time to understand their preferences, comfort, hair or skin
-            history, and the finish they want to carry out of the salon.
-          </p>
-          <p>
-            The experience is deliberately hospitality-led: clean rooms, thoughtful lighting, calm
-            service rhythm, and beauty professionals focused on detail rather than haste.
-          </p>
-          <Link className="lml-text-link" to="/the-salon">
-            Explore The Salon <ChevronRight size={16} />
-          </Link>
-        </div>
-      </section>
-
       <section className="lml-services-preview" id="services">
-        <div className="lml-reveal">
-          <SectionIntro
-            eyebrow="Services"
-            title="Beauty care shaped around consultation and craft."
-            copy="Explore premium hair, skin, nails, body, and scalp services without pricing tables or sales pressure."
-          />
+        <div className="lml-services-editorial-heading lml-reveal">
+          <span>Our Expertise</span>
+          <h2>Curated Service Verticals</h2>
+          <div aria-hidden="true" />
         </div>
         <div className="lml-service-grid lml-stagger lml-reveal">
-          {services.map((service) => {
-            const Icon = service.icon;
+          {services.slice(0, 3).map((service, index) => {
             const hasDetail = ["hair-artistry", "skin-care", "nail-architecture"].includes(
               service.slug,
             );
@@ -154,14 +242,14 @@ function Index() {
               <article className="lml-service-card" key={service.slug}>
                 <img src={service.image} alt={service.title} />
                 <div>
-                  <Icon size={20} />
-                  <span>{service.eyebrow}</span>
-                  <h3>{service.title}</h3>
+                  <strong>{String(index + 1).padStart(2, "0")}</strong>
+                  <span>{service.title}</span>
+                  <h3>{service.eyebrow}</h3>
                   <p>{service.description}</p>
                   {hasDetail ? (
-                    <Link to={detailPath(service.slug)}>View Service</Link>
+                    <Link to={detailPath(service.slug)}>Discover</Link>
                   ) : (
-                    <a href={contact.whatsapp}>WhatsApp Inquiry</a>
+                    <a href={contact.whatsapp}>Discover</a>
                   )}
                 </div>
               </article>
@@ -170,21 +258,116 @@ function Index() {
         </div>
       </section>
 
-      <section className="lml-gallery-preview" id="gallery">
-        <div className="lml-reveal">
-          <SectionIntro eyebrow="Gallery" title="A visual look at the salon atmosphere." />
+      <section className="lml-experience lml-reveal">
+        <div className="lml-experience-copy lml-reveal">
+          <span>Experience the Space</span>
+          <h2>A salon environment designed to be felt before the service begins.</h2>
+          <p>
+            Large mirrors, composed treatment rooms, quiet guest areas, and considered details make
+            the physical space part of the La Maison Luxe experience.
+          </p>
         </div>
-        <div className="lml-home-gallery lml-stagger lml-reveal">
-          {galleryItems.slice(0, 6).map((item, index) => (
-            <figure className={index === 0 ? "wide" : ""} key={item.label}>
-              <img src={item.image} alt={item.label} />
-              <figcaption>{item.label}</figcaption>
+        <div className="lml-space-editorial lml-stagger">
+          <figure className="lml-space-main lml-image-reveal">
+            <img src={experienceHighlights[0].image} alt={experienceHighlights[0].alt} />
+            <figcaption>
+              <span>{experienceHighlights[0].label}</span>
+              {experienceHighlights[0].copy}
+            </figcaption>
+          </figure>
+          <div className="lml-space-stack">
+            {experienceHighlights.slice(1).map((space) => (
+              <figure className="lml-image-reveal" key={space.title}>
+                <img src={space.image} alt={space.alt} />
+                <figcaption>
+                  <span>{space.label}</span>
+                  {space.copy}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="lml-gallery-preview lml-reveal"
+        id="gallery"
+        onWheel={handleGalleryWheel}
+        onTouchStart={handleGalleryTouchStart}
+        onTouchEnd={handleGalleryTouchEnd}
+      >
+        <div className="lml-gallery-editorial">
+          <div className="lml-gallery-copy" ref={galleryCopyRef}>
+            <span>Inside La Maison Luxe</span>
+            <h2>An experience, not just a salon.</h2>
+            <p>Every detail is designed to create a calm and luxurious grooming experience.</p>
+            <div className="lml-gallery-index" aria-live="polite">
+              <strong>{String(activeGalleryIndex + 1).padStart(2, "0")}</strong>
+              <i />
+              <span>{String(editorialGalleryItems.length).padStart(2, "0")}</span>
+            </div>
+            <p className="lml-gallery-current-copy">{activeGalleryItem.copy}</p>
+            <Link className="lml-text-link" to="/gallery">
+              View the Full Gallery <ChevronRight size={16} />
+            </Link>
+          </div>
+
+          <div className="lml-gallery-stage" ref={galleryStageRef}>
+            <figure
+              className="lml-gallery-hero-card"
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${activeGalleryItem.title}`}
+              onClick={() =>
+                setLightboxImage({
+                  src: activeGalleryItem.image,
+                  alt: activeGalleryItem.title,
+                  label: `${activeGalleryItem.category} - ${activeGalleryItem.title}`,
+                })
+              }
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setLightboxImage({
+                    src: activeGalleryItem.image,
+                    alt: activeGalleryItem.title,
+                    label: `${activeGalleryItem.category} - ${activeGalleryItem.title}`,
+                  });
+                }
+              }}
+            >
+              <img
+                ref={galleryImageRef}
+                src={activeGalleryItem.image}
+                alt={activeGalleryItem.title}
+              />
+              <figcaption>
+                <span>{activeGalleryItem.category}</span>
+                <div>
+                  <strong>[{String(activeGalleryIndex + 1).padStart(2, "0")}]</strong>
+                  <p>{activeGalleryItem.title}</p>
+                </div>
+              </figcaption>
             </figure>
-          ))}
+
+            <div className="lml-gallery-filmstrip" aria-label="Gallery navigation">
+              {editorialGalleryItems.map((item, index) => (
+                <button
+                  type="button"
+                  className={index === activeGalleryIndex ? "active" : ""}
+                  aria-label={`Show ${item.title}`}
+                  aria-pressed={index === activeGalleryIndex}
+                  onClick={() => setActiveGalleryIndex(index)}
+                  onMouseEnter={() => setActiveGalleryIndex(index)}
+                  key={item.title}
+                >
+                  <img src={item.image} alt="" aria-hidden="true" />
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-        <Link className="lml-center-link" to="/gallery">
-          View Full Gallery <ChevronRight size={16} />
-        </Link>
       </section>
 
       <section className="lml-testimonials lml-reveal">
@@ -213,7 +396,47 @@ function Index() {
         </div>
       </section>
 
+      <section className="lml-founders lml-reveal" id="founders">
+        <div className="lml-founders-head">
+          <div>
+            <span>Founders</span>
+            <h2>The people behind the La Maison Luxe experience.</h2>
+          </div>
+          <p>
+            Two founder journeys, shaped by care, craft, beauty, and a shared commitment to making
+            every guest feel personally looked after.
+          </p>
+        </div>
+
+        <div className="lml-founder-panels lml-stagger">
+          {founders.map((founder, index) => (
+            <article
+              className={`lml-founder-panel ${index % 2 === 1 ? "is-reverse" : ""}`}
+              key={founder.name}
+            >
+              <figure className={`lml-founder-panel-portrait ${founder.imageClass}`}>
+                <img src={founder.image} alt={`${founder.name}, ${founder.role}`} loading="lazy" />
+                <figcaption>
+                  <strong>{String(index + 1).padStart(2, "0")}</strong>
+                  <span>{founder.role}</span>
+                </figcaption>
+              </figure>
+
+              <div className="lml-founder-panel-copy">
+                <p className="lml-founder-panel-role">{founder.role}</p>
+                <h3>{founder.name}</h3>
+                <p className="lml-founder-panel-intro">{founder.intro}</p>
+                {founder.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <ConversionBand />
+      <LuxuryLightbox image={lightboxImage} onClose={() => setLightboxImage(null)} />
     </PageShell>
   );
 }

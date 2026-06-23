@@ -2,15 +2,18 @@ import type { LucideIcon } from "lucide-react";
 import { Gem, Hand, MapPin, MessageCircle, Phone, Scissors, Sparkles, Waves } from "lucide-react";
 
 export const contact = {
-  phoneLabel: "+91 98765 43210",
-  phoneHref: "tel:+919876543210",
+  phoneLabel: "+91 93111 05336",
+  phoneHref: "tel:+919311105336",
   whatsapp:
-    "https://wa.me/919876543210?text=Hello%20La%20Maison%20Luxe%2C%20I%20would%20like%20a%20consultation.",
-  directions: "https://www.google.com/maps/search/?api=1&query=La%20Maison%20Luxe%20Noida",
-  mapEmbed: "https://www.google.com/maps?q=Noida%2C%20Uttar%20Pradesh%2C%20India&output=embed",
-  address: "Noida, Uttar Pradesh, India",
+    "https://wa.me/919311105336?text=Hello%20La%20Maison%20Luxe%2C%20I%20would%20like%20a%20consultation.",
+  directions:
+    "https://www.google.com/maps/place/Sun+Twilight+Mall/@28.4779758,77.5073827,15z/data=!3m1!4b1!4m6!3m5!1s0x390cea8519eeb891:0x506c14edb6c0c05a!8m2!3d28.477977!4d77.5258367!16s%2Fg%2F11tf_4m2h5?entry=ttu&g_ep=EgoyMDI2MDYwMy4xIKXMDSoASAFQAw%3D%3D",
+  mapEmbed:
+    "https://www.google.com/maps?q=Suntwilight%2C%20Ground%20Floor%2C%20Shop%20No.%2010%2C%2011%20%26%2012%2C%20Sector-27%2C%20Greater%20Noida%20201310%2C%20Uttar%20Pradesh%2C%20India&output=embed",
+  address:
+    "Suntwilight, Ground Floor, Shop No. 10, 11 & 12, Sector-27, Greater Noida - 201310, Uttar Pradesh (India)",
   email: "lamaisonluxe@gmail.com",
-  instagram: "https://www.instagram.com/",
+  instagram: "https://www.instagram.com/la.maison_luxe?igsh=MnI5MnAzbXZ0bmZp",
   hours: ["Monday - Saturday: 10:00 AM - 8:00 PM", "Sunday: 11:00 AM - 6:00 PM"],
 };
 
@@ -54,7 +57,7 @@ export const salonSpaces = [
   {
     title: "Nail Studio",
     image: images.nails,
-    text: "A dedicated nail and pedicure studio with product walls, lounge chairs, and fine detail.",
+    text: "A dedicated nail and pedicure studio with product walls, lounge seating, and refined detail.",
   },
   {
     title: "Luxury Details",
@@ -80,7 +83,7 @@ export const services: Service[] = [
   {
     slug: "hair-artistry",
     title: "Hair Artistry",
-    eyebrow: "Cuts, color, finish",
+    eyebrow: "Cuts, color, and finish",
     image: images.hair,
     icon: Scissors,
     description:
@@ -108,7 +111,7 @@ export const services: Service[] = [
   {
     slug: "skin-care",
     title: "Skin Care Rituals",
-    eyebrow: "Facials, cleanup, glow care",
+    eyebrow: "Facials, cleanups, and glow care",
     image: images.skin,
     icon: Sparkles,
     description:
@@ -134,7 +137,7 @@ export const services: Service[] = [
     image: images.nails,
     icon: Gem,
     description:
-      "Nail services focus on shape, structure, surface finish, and the small details that make hands feel considered.",
+      "Nail services focus on shape, structure, surface finish, and the small details that make hands look considered.",
     highlights: ["Shape consultation", "Gel finishes", "Detailed prep"],
     benefits: ["Polished finish", "Better structure", "Longer-lasting look"],
     offerings: ["Nail Extensions", "Gel Overlays", "Spa Manicure", "Spa Pedicure", "Nail Art"],
@@ -152,14 +155,14 @@ export const services: Service[] = [
   {
     slug: "body-treatments",
     title: "Body Treatments",
-    eyebrow: "Body care and polish",
+    eyebrow: "Body care and polishing",
     image: images.body,
     icon: Hand,
     description:
       "Body care services are built around comfort, skin feel, and the kind of composed reset expected from a premium beauty house.",
     highlights: ["Calm rooms", "Comfort-led service", "Skin softness"],
     benefits: ["Smoother feel", "Relaxed experience", "Refreshed appearance"],
-    offerings: ["Body Polishing", "Body Rituals", "Waxing", "Hands and Feet Care"],
+    offerings: ["Body Polishing", "Body Rituals", "Waxing", "Hand and Foot Care"],
     faq: [],
   },
   {
@@ -189,11 +192,11 @@ export const galleryItems = [
   { label: "Nail Studio", category: "Nails", image: images.nails },
   { label: "Nail Lounge", category: "Nails", image: images.nailLounge },
   { label: "Consultation Room", category: "Salon", image: images.reception },
-  { label: "Private Consultation", category: "Behind The Scenes", image: images.consultation },
+  { label: "Private Consultation", category: "Behind the Scenes", image: images.consultation },
   { label: "Beauty Room Corridor", category: "Skin", image: images.detail },
   { label: "Treatment Room", category: "Skin", image: images.treatment },
   { label: "Casmara Treatment Room", category: "Skin", image: images.treatmentAlt },
-  { label: "Ambient Treatment Room", category: "Behind The Scenes", image: images.treatmentMood },
+  { label: "Ambient Treatment Room", category: "Behind the Scenes", image: images.treatmentMood },
   { label: "Guest Lounge", category: "Salon", image: images.lounge },
 ];
 

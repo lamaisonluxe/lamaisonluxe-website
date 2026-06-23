@@ -6,7 +6,7 @@ import tsConfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), tailwindcss(), tsConfigPaths()],
   build: {
-    outDir: "dist/here-now",
+    outDir: "dist",
     emptyOutDir: true,
   },
 });

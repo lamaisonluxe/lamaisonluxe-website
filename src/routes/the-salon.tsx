@@ -10,7 +10,7 @@ export const Route = createFileRoute("/the-salon")({
       {
         name: "description",
         content:
-          "Explore the physical salon experience at La Maison Luxe in Noida: reception, styling area, skin care rooms, nail studio, luxury details, and location.",
+          "Explore the physical salon experience at La Maison Luxe in Greater Noida: reception, styling area, skin care rooms, nail studio, luxury details, and location.",
       },
     ],
   }),
@@ -26,7 +26,7 @@ function TheSalon() {
         <img src={images.reception} alt="La Maison Luxe salon reception" />
         <div>
           <span>The Salon</span>
-          <h1>Interior calm, polished detail, and a space made for considered care.</h1>
+          <h1>Calm interiors, polished details, and a space made for considered care.</h1>
           <p>
             A closer look at the environment guests experience before, during, and after their
             service.
@@ -38,7 +38,7 @@ function TheSalon() {
         <SectionIntro
           eyebrow="Interior Gallery"
           title="Every room has a role in the experience."
-          copy="Reception, styling, treatment, nail, and detail spaces are presented as part of the service standard."
+          copy="Reception, styling, treatment, nail, and detail spaces are all part of the service standard."
         />
         <div className="lml-salon-grid">
           {salonSpaces.map((space, index) => (
@@ -56,7 +56,7 @@ function TheSalon() {
 
       <section className="lml-space-love">
         <div>
-          <span>Why Clients Love The Space</span>
+          <span>Why Clients Love the Space</span>
           <h2>Quiet confidence, visible cleanliness, and a premium pace.</h2>
         </div>
         <div className="lml-love-list">
@@ -76,7 +76,7 @@ function TheSalon() {
       <section className="lml-location-block">
         <div>
           <span>Location</span>
-          <h2>Visit La Maison Luxe in Noida.</h2>
+          <h2>Visit La Maison Luxe in Greater Noida.</h2>
           <p>{contact.address}</p>
           <div className="lml-inline-actions">
             <a className="lml-btn lml-btn-gold" href={contact.directions}>
