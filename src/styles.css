@@ -1221,6 +1221,7 @@
   background:
     linear-gradient(135deg, rgba(252, 241, 214, 0.98), rgba(246, 232, 195, 0.82)), var(--cream);
   overflow: hidden;
+  touch-action: pan-y;
 }
 .lml-gallery-editorial {
   display: grid;
@@ -1293,6 +1294,7 @@
   background: var(--forest);
   box-shadow: 0 34px 90px rgba(33, 79, 62, 0.2);
   cursor: zoom-in;
+  touch-action: pan-y;
   transition:
     box-shadow 700ms var(--ease-luxury),
     transform 700ms var(--ease-luxury);
@@ -1325,6 +1327,9 @@
   min-height: inherit;
   object-fit: cover;
   transform-origin: center;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
   transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .lml-gallery-hero-card:hover img {
@@ -1381,6 +1386,7 @@
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
   min-height: 100%;
+  overscroll-behavior: contain;
 }
 .lml-gallery-filmstrip button {
   min-height: 0;
@@ -2887,7 +2893,11 @@
     grid-template-rows: 82px;
     margin-inline: -18px;
     padding-inline: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
   }
   .lml-gallery-filmstrip button {
     scroll-snap-align: start;

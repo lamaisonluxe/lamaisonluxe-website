@@ -1,6 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ChevronRight, Diamond, MapPin, MessageCircle, Star } from "lucide-react";
-import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent, WheelEvent } from "react";
 import { LuxuryLightbox } from "../components/luxury-lightbox";
@@ -118,39 +117,65 @@ function Index() {
   const galleryCopyRef = useRef<HTMLDivElement>(null);
   const galleryImageRef = useRef<HTMLImageElement>(null);
   const galleryWheelLockRef = useRef(0);
-  const galleryTouchStartRef = useRef<number | null>(null);
+  const galleryTouchStartRef = useRef<{ x: number; y: number } | null>(null);
   const activeGalleryItem = editorialGalleryItems[activeGalleryIndex];
+
+  useEffect(() => {
+    editorialGalleryItems.forEach((item) => {
+      const image = new Image();
+      image.src = item.image;
+    });
+  }, []);
 
   useEffect(() => {
     if (!galleryStageRef.current || !galleryCopyRef.current || !galleryImageRef.current) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchLayout = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
     if (reducedMotion) return;
+    if (isTouchLayout) return;
 
-    gsap.fromTo(
-      galleryCopyRef.current.children,
-      { autoAlpha: 0, y: 18 },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.95,
-        ease: "power3.out",
-        stagger: 0.08,
-      },
-    );
+    let isCancelled = false;
 
-    gsap.fromTo(
-      galleryImageRef.current,
-      { autoAlpha: 0.72, scale: 1.035 },
-      { autoAlpha: 1, scale: 1, duration: 1.25, ease: "power2.out" },
-    );
+    void (async () => {
+      const { gsap } = await import("gsap");
+      if (isCancelled || !galleryCopyRef.current || !galleryImageRef.current) return;
+
+      gsap.killTweensOf([galleryCopyRef.current.children, galleryImageRef.current]);
+      gsap.fromTo(
+        galleryCopyRef.current.children,
+        { autoAlpha: 0, y: 18 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.95,
+          ease: "power3.out",
+          stagger: 0.08,
+        },
+      );
+
+      gsap.fromTo(
+        galleryImageRef.current,
+        { autoAlpha: 0.72, scale: 1.035 },
+        { autoAlpha: 1, scale: 1, duration: 1.25, ease: "power2.out" },
+      );
+    })();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [activeGalleryIndex]);
 
   const showGalleryItem = (index: number) => {
-    setActiveGalleryIndex(
+    const nextIndex =
       ((index % editorialGalleryItems.length) + editorialGalleryItems.length) %
-        editorialGalleryItems.length,
-    );
+      editorialGalleryItems.length;
+    setActiveGalleryIndex((currentIndex) => (currentIndex === nextIndex ? currentIndex : nextIndex));
+  };
+
+  const previewGalleryItem = (index: number) => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    showGalleryItem(index);
   };
 
   const handleGalleryWheel = (event: WheelEvent<HTMLElement>) => {
@@ -166,17 +191,23 @@ function Index() {
   };
 
   const handleGalleryTouchStart = (event: TouchEvent<HTMLElement>) => {
-    galleryTouchStartRef.current = event.touches[0]?.clientX ?? null;
+    const touch = event.touches[0];
+    galleryTouchStartRef.current = touch ? { x: touch.clientX, y: touch.clientY } : null;
   };
 
   const handleGalleryTouchEnd = (event: TouchEvent<HTMLElement>) => {
-    if (galleryTouchStartRef.current === null) return;
+    const start = galleryTouchStartRef.current;
+    if (start === null) return;
 
-    const delta = galleryTouchStartRef.current - (event.changedTouches[0]?.clientX ?? 0);
+    const endTouch = event.changedTouches[0];
     galleryTouchStartRef.current = null;
-    if (Math.abs(delta) < 42) return;
+    if (!endTouch) return;
 
-    showGalleryItem(activeGalleryIndex + (delta > 0 ? 1 : -1));
+    const deltaX = start.x - endTouch.clientX;
+    const deltaY = start.y - endTouch.clientY;
+    if (Math.abs(deltaX) < 64 || Math.abs(deltaX) < Math.abs(deltaY) * 1.35) return;
+
+    showGalleryItem(activeGalleryIndex + (deltaX > 0 ? 1 : -1));
   };
 
   return (
@@ -357,8 +388,8 @@ function Index() {
                   className={index === activeGalleryIndex ? "active" : ""}
                   aria-label={`Show ${item.title}`}
                   aria-pressed={index === activeGalleryIndex}
-                  onClick={() => setActiveGalleryIndex(index)}
-                  onMouseEnter={() => setActiveGalleryIndex(index)}
+                  onClick={() => showGalleryItem(index)}
+                  onMouseEnter={() => previewGalleryItem(index)}
                   key={item.title}
                 >
                   <img src={item.image} alt="" aria-hidden="true" />
