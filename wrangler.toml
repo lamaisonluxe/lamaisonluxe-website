@@ -1,5 +1,11 @@
 name = "lamaisonluxe-website"
 compatibility_date = "2026-06-23"
+workers_dev = false
+preview_urls = false
+routes = [
+  { pattern = "lamaisonluxe.in", custom_domain = true },
+  { pattern = "www.lamaisonluxe.in", custom_domain = true },
+]
 
 [assets]
 directory = "./dist/"

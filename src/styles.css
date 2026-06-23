@@ -308,9 +308,9 @@
 }
 .lml-menu-toggle {
   width: 42px;
-  border: 1px solid rgba(252, 241, 214, 0.3);
-  background: rgba(252, 241, 214, 0.08);
-  color: var(--cream);
+  border: 1px solid #e2c98a;
+  background: #e2c98a;
+  color: #214f3e;
   padding: 0;
   display: none;
 }
