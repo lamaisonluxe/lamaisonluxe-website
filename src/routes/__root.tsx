@@ -10,7 +10,6 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -38,7 +37,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    console.error("Route error boundary", error);
   }, [error]);
 
   return (
@@ -100,13 +99,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8cfbc6e8-f032-4de3-bba1-906e637d8753/id-preview-3e243760--61eaa059-4bbd-4564-abde-3a7f2b47aaee.lovable.app-1780474623161.png",
+        content: "/brand/la-maison-horizontal-salon-cornsilk.png",
       },
       {
         name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8cfbc6e8-f032-4de3-bba1-906e637d8753/id-preview-3e243760--61eaa059-4bbd-4564-abde-3a7f2b47aaee.lovable.app-1780474623161.png",
+        content: "/brand/la-maison-horizontal-salon-cornsilk.png",
       },
     ],
     links: [
