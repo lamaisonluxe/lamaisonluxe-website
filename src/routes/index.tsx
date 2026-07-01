@@ -7,6 +7,83 @@ import type { LightboxImage } from "../components/luxury-lightbox";
 import { contact, detailPath, images, services, testimonials } from "../lib/la-maison";
 import { ConversionBand, PageShell } from "../components/la-maison-layout";
 
+const homePageTitle =
+  "La Maison Luxe | Luxury Salon in Greater Noida for Hair, Beauty & Bridal Makeup";
+const homePageDescription =
+  "La Maison Luxe is a premium beauty salon and luxury unisex salon in Greater Noida for hair spa, hair color, bridal makeup, skin care, nails, and luxury hair care.";
+const homePageKeywords = [
+  "La Maison Luxe",
+  "Luxury Salon in Greater Noida",
+  "La Maison Luxe Salon",
+  "Premium Beauty Salon",
+  "Affordable luxury salon",
+  "Best hair spa in Greater Noida",
+  "La Maison Luxe Beauty Salon",
+  "Premium Salon",
+  "Unisex Salon",
+  "La Maison Luxe Greater Noida",
+  "La Maison Luxe Hair Salon",
+  "Best Beauty Salon in Greater Noida",
+  "Luxury Hair Care",
+  "Best Luxury Salon Near Me",
+  "Best Hair Salon in Greater Noida",
+  "Best Unisex Salon in Greater Noida",
+  "Luxury Hair Salon in Greater Noida",
+  "Bridal Makeup Salon in Greater Noida",
+  "Best Hair Color Salon in Greater Noida",
+].join(", ");
+const homePageCanonical = "https://www.lamaisonluxe.in/";
+const homePageOgImage = "/showroom/hero-salon-floor.jpeg";
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  name: "La Maison Luxe",
+  alternateName: ["La Maison Luxe Salon", "La Maison Luxe Beauty Salon"],
+  url: homePageCanonical,
+  image: homePageOgImage,
+  telephone: contact.phoneLabel,
+  email: contact.email,
+  priceRange: "$$",
+  description: homePageDescription,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Suntwilight, Ground Floor, Shop No. 10, 11 & 12, Sector-27",
+    addressLocality: "Greater Noida",
+    postalCode: "201310",
+    addressRegion: "Uttar Pradesh",
+    addressCountry: "IN",
+  },
+  areaServed: ["Greater Noida", "Noida", "Delhi NCR"],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "10:00",
+      closes: "20:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Sunday",
+      opens: "11:00",
+      closes: "18:00",
+    },
+  ],
+  sameAs: [contact.instagram],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "La Maison Luxe Salon Services",
+    itemListElement: services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.title,
+        description: service.description,
+      },
+    })),
+  },
+};
+
 const serviceTickerItems = [
   "Scalp Treatments",
   "Body Rituals",
@@ -99,11 +176,32 @@ const founders = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "La Maison Luxe - Luxury Salon in Greater Noida" },
+      { title: homePageTitle },
       {
         name: "description",
-        content:
-          "La Maison Luxe is the house of luxury grooming in Greater Noida, with premium hair, skin, nail, scalp, and body care in an elegant salon setting.",
+        content: homePageDescription,
+      },
+      { name: "keywords", content: homePageKeywords },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { name: "author", content: "La Maison Luxe" },
+      { property: "og:title", content: homePageTitle },
+      { property: "og:description", content: homePageDescription },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: homePageCanonical },
+      { property: "og:site_name", content: "La Maison Luxe" },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: homePageOgImage },
+      { property: "og:image:alt", content: "La Maison Luxe luxury salon in Greater Noida" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: homePageTitle },
+      { name: "twitter:description", content: homePageDescription },
+      { name: "twitter:image", content: homePageOgImage },
+    ],
+    links: [{ rel: "canonical", href: homePageCanonical }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(localBusinessJsonLd),
       },
     ],
   }),
@@ -286,6 +384,77 @@ function Index() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="lml-seo-content lml-reveal" aria-labelledby="lml-seo-heading">
+        <div className="lml-seo-content-inner">
+          <span>La Maison Luxe Greater Noida</span>
+          <h2 id="lml-seo-heading">Luxury salon care for hair, beauty, skin, nails, and bridal looks.</h2>
+          <div className="lml-seo-copy">
+            <p>
+              La Maison Luxe is a luxury salon in Greater Noida created for guests who want beauty
+              services to feel personal, refined, and reliable. The salon brings together premium
+              hair care, skin rituals, nail architecture, body care, scalp treatments, grooming, and
+              occasion-ready makeup in a setting that feels calm from the moment you arrive. If you
+              are searching for La Maison Luxe, La Maison Luxe Salon, La Maison Luxe Beauty Salon,
+              or a premium beauty salon that understands modern luxury, this is a space designed
+              around consultation, comfort, and precise service.
+            </p>
+            <p>
+              As an affordable luxury salon, La Maison Luxe focuses on giving every guest a polished
+              experience without making beauty feel distant or complicated. The service flow starts
+              with listening: your hair history, skin needs, daily routine, preferred finish, and
+              event plans all matter before a stylist or beauty expert recommends the right
+              treatment. This makes the salon a strong choice for anyone looking for the best hair
+              salon in Greater Noida, the best beauty salon in Greater Noida, or the best unisex
+              salon in Greater Noida for family grooming, self-care days, and regular maintenance.
+            </p>
+            <p>
+              Hair is one of the salon's core strengths. Guests can choose precision cuts, blowouts,
+              hair spa, scalp care, shine care, color planning, balayage, and global color services
+              shaped around hair health and lifestyle. For people searching for the best hair spa in
+              Greater Noida, a luxury hair salon in Greater Noida, luxury hair care, or the best hair
+              color salon in Greater Noida, La Maison Luxe Hair Salon offers a consultation-led
+              approach that considers tone, texture, face shape, maintenance, and the finish you
+              want after leaving the chair.
+            </p>
+            <p>
+              The beauty experience also extends into private skin care rooms, a detailed nail
+              studio, body treatments, and makeup services for important occasions. Facials,
+              cleanups, hydration rituals, waxing, body polishing, manicure, pedicure, gel overlays,
+              nail extensions, and subtle luxury finishes are handled with care and hygiene. Brides,
+              families, and guests preparing for celebrations can also consider La Maison Luxe as a
+              bridal makeup salon in Greater Noida, where makeup is planned to suit the outfit,
+              lighting, features, and comfort level instead of following a single template.
+            </p>
+            <p>
+              The salon is unisex, premium, and thoughtfully located in Sector-27, Greater Noida,
+              making it convenient for residents nearby and guests across Noida and Delhi NCR. When
+              people search for the best luxury salon near me, La Maison Luxe Greater Noida stands
+              out because the space itself supports the service: generous mirrors, calm lighting,
+              private treatment areas, a dedicated nail zone, and a relaxed rhythm that avoids the
+              rushed feeling many salons create. Every detail is meant to make hair, beauty, and
+              grooming feel considered.
+            </p>
+            <p>
+              La Maison Luxe is for guests who value a premium salon experience, but also want clear
+              guidance, approachable service, and consistent results. Whether you visit for a hair
+              spa, a new color, a skin ritual, nail art, bridal makeup, or a complete beauty refresh,
+              the goal remains the same: to help you look polished, feel cared for, and enjoy luxury
+              beauty in Greater Noida with confidence.
+            </p>
+            <p>
+              For new guests comparing salons online, the difference is in the way La Maison Luxe
+              combines expertise with atmosphere. A premium salon should make appointments easy,
+              explain services clearly, respect time, and help guests choose care that suits their
+              budget and goals. That balance is why La Maison Luxe Salon is positioned as both a
+              luxury hair care destination and an accessible premium beauty salon for everyday
+              grooming, monthly maintenance, festive preparation, and special events across Greater
+              Noida, with consistent attention to hygiene, comfort, finish quality, and long-term
+              guest relationships for every guest.
+            </p>
+          </div>
         </div>
       </section>
 
