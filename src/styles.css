@@ -383,7 +383,6 @@
 .lml-section-intro span,
 .lml-experience-copy span,
 .lml-about-copy span,
-.lml-seo-content span,
 .lml-featured-testimonial span,
 .lml-page-hero span,
 .lml-space-love span,
@@ -677,7 +676,6 @@
 .lml-experience,
 .lml-about,
 .lml-services-preview,
-.lml-seo-content,
 .lml-gallery-preview,
 .lml-testimonials,
 .lml-founders,
@@ -701,7 +699,6 @@
 .lml-section-intro h2,
 .lml-experience-copy h2,
 .lml-about-copy h2,
-.lml-seo-content h2,
 .lml-page-hero h1,
 .lml-space-love h2,
 .lml-location-block h2,
@@ -717,7 +714,6 @@
 .lml-section-intro p,
 .lml-experience-copy p,
 .lml-about-copy p,
-.lml-seo-content p,
 .lml-page-hero p,
 .lml-space-love p,
 .lml-location-block p,
@@ -1160,38 +1156,6 @@
 .lml-service-card a:hover::after,
 .lml-service-row a:hover::after {
   transform: translate3d(4px, 0, 0);
-}
-
-.lml-seo-content {
-  background:
-    linear-gradient(180deg, rgba(255, 248, 232, 0.76), rgba(252, 241, 214, 0.94)),
-    var(--paper);
-  color: var(--forest);
-  border-top: 1px solid rgba(144, 117, 72, 0.2);
-  border-bottom: 1px solid rgba(144, 117, 72, 0.2);
-}
-.lml-seo-content-inner {
-  width: min(1120px, 100%);
-  margin: 0 auto;
-}
-.lml-seo-content span {
-  color: #9b7a3f;
-}
-.lml-seo-content h2 {
-  width: min(780px, 100%);
-  color: var(--forest);
-  margin-bottom: clamp(26px, 3vw, 42px);
-}
-.lml-seo-copy {
-  column-count: 2;
-  column-gap: clamp(32px, 5vw, 72px);
-}
-.lml-seo-content p {
-  margin: 0 0 20px;
-  break-inside: avoid;
-}
-.lml-seo-content p:last-child {
-  margin-bottom: 0;
 }
 
 .lml-masonry {
@@ -2836,9 +2800,6 @@
   }
   .lml-service-card p {
     font-size: 14px;
-  }
-  .lml-seo-copy {
-    column-count: 1;
   }
   .lml-experience {
     display: flex;
